@@ -1,4 +1,5 @@
-import { LiveCode } from '../src/LiveCode'
+import LiveEdit from '../src/LiveEdit'
+import { example_1, example_2, example_3 } from '../src/Examples'
 
 # Modern State Management (with hooks)
 
@@ -6,13 +7,56 @@ import { LiveCode } from '../src/LiveCode'
 
 ---
 
-## Hooks intro
+## Hooks
 
-<LiveCode />
+- add state to functional components
+- regular or custom hooks
+- co locating code 
+- replacing HOCs and reducing "wrapper hell"
 
 ---
 
-## Using React Context API Effectively
+## Four rules of hooks
+
+- never call hooks from a loop
+- never call hooks from a nested functional
+- hooks always sit at the top level
+- only call from a functional component
+
+---
+
+### npm install eslint-plugin-react-hooks
+
+---
+### Component State rather than global state
+
+- With redux all state is global and accessible to every component
+
+- Add providers to only the components that need them
+
+- Components outside that never use this state don't have access to it now
+
+- Idea of co-locating state with the components that use it and avoid prop drilling at the same time
+
+---
+
+---
+
+## [Using React Context API Effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively)
+
+- Details the purest way of handling context API
+
+---
+
+## Hooks intro
+
+<LiveEdit noInline={true} code={example_1} />
+
+---
+
+### Hooks State with unstated-Next
+
+<LiveEdit noInline={true} code={example_3} />
 
 ---
 
