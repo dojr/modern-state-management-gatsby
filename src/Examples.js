@@ -1,4 +1,7 @@
+import immer from 'immer';
+import {useImmer} from 'use-immer';
 
+export const immer_example_scope = { immer, useImmer }
 
 export const example_1 = `
 const Wrapper = ({ children }) => (
@@ -233,3 +236,85 @@ render (
 
 
 `
+
+
+export const immer_finished = `
+function createContainer(useHook) {
+    const Context = React.createContext(null);
+
+    function Provider(props) {
+        const value = useHook(props.initialState);
+        return <Context.Provider value={value}>{props.children}</Context.Provider>;
+    }
+
+    function useContainer() {
+        const value = React.useContext(Context);
+        if (value === null) {
+            throw new Error('Component must be wrapped with <Container.Provider>');
+        }
+        return value;
+    }
+
+    return { Provider, useContainer };
+}
+
+function useContainer(container){
+    return container.useContainer();
+}
+
+const Wrapper = ({ children }) => (
+    <div style={{
+        background: 'papayawhip',
+        width: '100%',
+        padding: '2rem'
+    }}>
+        {children}
+    </div>
+)
+
+const useCountProvider = ({ initialCount}) => {
+  const [count, setCount] = useImmer({
+    count: initialCount,
+    lastCount: initialCount === 0 ? 0 : initialCount - 1
+  });
+  
+  return {
+    // state
+    count,
+    
+    // callbacks
+    setCount,
+  }
+}
+
+const { Provider: CountProvider, useContainer: useCount } = createContainer(useCountProvider);
+
+const Count = () => {
+    const { count, setCount } = useCount();
+
+    return (
+        <>
+            <h3 style={{ color: 'palevioletred' }}>
+                count: {count.count}
+                <p>lastCount: {count.lastCount}</p>
+            </h3>
+            <button onClick={() => setCount(draft => {
+              draft.lastCount = draft.count;
+              draft.count += 1;
+            })} >
+                Increment
+            </button>
+        </>
+    )
+}
+
+render (
+    <CountProvider initialState={{ initialCount: 3 }}>
+      <Wrapper>
+          <Count />
+      </Wrapper>
+    </CountProvider >
+)
+`
+
+

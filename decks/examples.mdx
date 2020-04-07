@@ -1,15 +1,30 @@
-import LiveEdit from '../src/components/LiveEdit'
-import { example_1, example_2, example_3, unstated_next_finished } from '../src/Examples'
+import LiveEdit, { LiveWrapper } from '../src/components/LiveEdit'
+import Layout from '../src/Layout'
 
-# These are all the examples used
+import { example_1, example_2, example_3, unstated_next_finished, immer_example_scope, immer_finished } from '../src/Examples'
+
+<Layout>
+  
+
+# Examples
 
 ## State management without context
-
 <LiveEdit noInline={true} code={example_1} />
 
 ## Hooks state with Context API
 
 <LiveEdit noInline={true} code={example_2} />
+
+## Hooks State with unstated-next
+
+<LiveEdit noInline={true} code={unstated_next_finished} />
+
+## useImmer example
+
+<LiveEdit noInline={true} code={immer_finished} scope={immer_example_scope}/>
+
+
+</Layout>
 
 ---
 

@@ -17,7 +17,7 @@ const StyledProvider = styled(LiveProvider)`
   margin-bottom: ${polished.rem(100)};
 `;
 
-const LiveWrapper = styled.div`
+export const LiveWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: stretch;
