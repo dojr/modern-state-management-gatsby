@@ -72,8 +72,8 @@ const StyledError = styled(LiveError)`
   font-family: 'Source Code Pro', monospace;
 `;
 
-const LiveEdit = ({ noInline, code }) => (
-  <StyledProvider code={code} noInline={noInline}>
+const LiveEdit = ({ noInline, code, scope }) => (
+  <StyledProvider code={code} noInline={noInline} scope={scope}>
     <LiveWrapper>
       <StyledEditor>
         <LiveEditor />

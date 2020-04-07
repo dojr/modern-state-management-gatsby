@@ -126,6 +126,13 @@ export default {
     },
     img: {
       maxWidth: '100%'
+    },
+    li: {
+      color: 'text',
+      fontFamily: 'body',
+      lineHeight: 'body',
+      fontWeight: 'body',
+      fontSize: 4
     }
   }
 }

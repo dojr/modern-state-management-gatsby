@@ -1,5 +1,36 @@
-import LiveEdit from '../src/LiveEdit'
-import { example_1, example_2, example_3 } from '../src/Examples'
+import LiveEdit from '../src/components/LiveEdit'
+import { example_1, example_2, example_3, unstated_next_finished } from '../src/Examples'
+import immer from 'immer';
+import {useImmer} from 'use-immer';
+
+export const immer_example_scope = { immer, useImmer }
+const code = `
+    return (
+            <ApolloProvider client={client}>
+                <AuthProvider>
+                    <DimensionsProvider>
+                        <MetadataRealmProvider>
+                            <LearnerRealmProvider>
+                                <DownloadTaskProvider>
+                                    <CacheProvider>
+                                        <ThemeProvider theme={Theme}>
+                                            <EditProvider>
+                                                <NavigationContainer>
+                                                    <FeedbackProvider>
+                                                        <AppProvider />
+                                                    </FeedbackProvider>
+                                                </NavigationContainer>
+                                            </EditProvider>
+                                        </ThemeProvider>
+                                    </CacheProvider>
+                                </DownloadTaskProvider>
+                            </LearnerRealmProvider>
+                        </MetadataRealmProvider>
+                    </DimensionsProvider>
+                </AuthProvider>
+            </ApolloProvider>
+        );
+`
 
 # Modern State Management (with hooks)
 
@@ -7,7 +38,7 @@ import { example_1, example_2, example_3 } from '../src/Examples'
 
 ---
 
-## Hooks
+## React Hooks Intro
 
 - add state to functional components
 - regular or custom hooks
@@ -28,38 +59,126 @@ import { example_1, example_2, example_3 } from '../src/Examples'
 ### npm install eslint-plugin-react-hooks
 
 ---
-### Component State rather than global state
 
-- With redux all state is global and accessible to every component
+## Modern state management
 
-- Add providers to only the components that need them
+- local state first then if components need to share state reach for context api
 
-- Components outside that never use this state don't have access to it now
+`const [count, setCount] = useState(0)` ✔
 
-- Idea of co-locating state with the components that use it and avoid prop drilling at the same time
+- use context api with `unstated-next` for simpler api
+
+`const { count , setCount } = useCounter()` ✔
+
+- no need to reach for anything more advanced like redux
+
+
+---
+## Component State rather than global state
+
+- With redux all state is global and accessible to every component 🤢
+
+- React hooks and context allows state contained within only the components that need it ✔
+
+- Components outside that never use this state don't have access to it now ✔
+
+- Co-locating state with the components that use it and avoid prop drilling at the same time ✔
 
 ---
 
+## Considerations for state
+
+- Some state should be global (auth)
+
+- Most other state could be contained within a separate part of the app
+
+- Context Providers can then be used at the global level or component level
+
 ---
 
-## [Using React Context API Effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively)
-
-- Details the purest way of handling context API
-
----
-
-## Hooks intro
+## State management without context
 
 <LiveEdit noInline={true} code={example_1} />
 
 ---
 
-### Hooks State with unstated-Next
+### [Using React Context API Effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) - Kent Dodds
+
+## Hooks state with Context API
+
+<LiveEdit noInline={true} code={example_2} />
+
+---
+
+## [unstated-next](https://github.com/jamiebuilds/unstated-next)
+
+
+200 bytes to never think about React state management libraries ever again
+
+---
+
+### Some downsides to unstated-next
+
+- Pure react so no additonal debugging functionality like with redux
+- "Provider hell"
+- Nested providers can use parent providers so re-ordering providers may break things
+    - not a problem with global state
+
+<pre>    
+    {code}
+</pre>
+
+---
+
+## Hooks State with unstated-next
 
 <LiveEdit noInline={true} code={example_3} />
 
----
-
-### Unstated Next
 
 ---
+
+### Other state libraries and Redux
+- Redux
+  -   [redux-toolkit](https://github.com/reduxjs/redux-toolkit)
+      - defacto library for redux in react 
+  - [easy-peasy](https://github.com/ctrlplusb/easy-peasy#readme)
+- Mobx 
+   - [Mobx with hooks](https://www.youtube.com/watch?v=pnhIJA64ByY&feature=youtu.be)
+- Other libraries
+  - [react-easy-state](https://github.com/RisingStack/react-easy-state)
+  - [reusable](https://github.com/reusablejs/reusable)
+---
+
+
+### [Immer](https://github.com/immerjs/immer)
+
+- handles complex state easily
+
+- create immutable state by mutating current state
+
+- `useImmer` hook inside containers instead of `useState`
+
+- use cases include nested state or objects
+
+---
+
+### useImmer example
+
+<LiveEdit noInline={true} code={unstated_next_finished} scope={immer_example_scope}/>
+
+---
+
+### CBT Examples
+
+- client-apps-learner
+  - [Containers](https://github.com/cbtnuggets/client-apps-learner/tree/master/react-native/state/containers)
+- Quiz
+  - [Container](https://github.com/cbtnuggets/client-apps-learner/blob/master/react-native/components/Quiz/state/QuizContainer.tsx)
+  - [Example usage](https://github.com/cbtnuggets/client-apps-learner/blob/master/react-native/components/Quiz/components/QuizQuestion.tsx)
+- [Auth](https://github.com/cbtnuggets/lib-react-custom-hooks/blob/use-auth-hook/examples/src/lib/useAuth/index.tsx)
+- Bounty
+  - [State containers](https://github.com/cbtnuggets/static-dashboard/tree/update-bounty-board/src/apps/bountyBoard/state)
+
+---
+
+# Questions?

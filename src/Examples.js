@@ -1,3 +1,5 @@
+
+
 export const example_1 = `
 const Wrapper = ({ children }) => (
     <div style={{
@@ -54,6 +56,7 @@ const CountProvider = ({ children }) => {
   )
 }
 
+// provides hook api we usually see
 function useCount() {
   const context = React.useContext(CountContext)
   if (context === undefined) {
@@ -83,8 +86,6 @@ const Button = () => {
 }
 
 const Count = () => {
-    const [count, setCount] = React.useState(0);
-
     return (
         <CountProvider>
             <Title />
@@ -102,6 +103,7 @@ render (
 `
 
 export const example_3  = `
+// unstated next code 
 function createContainer(useHook) {
     const Context = React.createContext(null);
 
@@ -158,7 +160,7 @@ render (
 
 `
 
-export const example_4 = `
+export const unstated_next_finished = `
 function createContainer(useHook) {
     const Context = React.createContext(null);
 
@@ -192,8 +194,8 @@ const Wrapper = ({ children }) => (
     </div>
 )
 
-const useCountProvider = ({ iniitalCount}) => {
-  const [count, setCount] = React.useState(iniitalCount);
+const useCountProvider = ({ initialCount}) => {
+  const [count, setCount] = React.useState(initialCount);
   
   return {
     // state
@@ -222,7 +224,7 @@ const Count = () => {
 }
 
 render (
-    <CountProvider initialState={{ iniitalCount: 3 }}>
+    <CountProvider initialState={{ initialCount: 3 }}>
       <Wrapper>
           <Count />
       </Wrapper>
