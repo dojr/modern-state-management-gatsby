@@ -1,1 +1,1 @@
-# Modern State Management using gatsby, mdx-deck, react-live
+# https://pensive-darwin-01f0d0.netlify.app/
